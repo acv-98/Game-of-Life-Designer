@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  overflow: scroll;
+  overflow-x: hidden;
+  background: black;
+}
+
+canvas {
+  background: black;
+}
+
+.dynamic-text{
+  color:lightgreen;
+}
+
+.h5{
+  font-weight: bold;
+}
+
+.help-heading{
+  color:green;
+}
+
+.help-text{
+  color:lightgreen;
+}
+
+.hidden-element{
+  display:none;
+}
+
+.toolbar-element{
+  display:inline-block;
+}
+
+.toolbar-text{
+  display:inline-block;
+}
+
+#colour-menu{
+  color:white;
+}
+
+#game-help{
+  color: white;
+  font-weight: bold;
+}
+
+#start_btn{
+  display: none;
+}
+
+#toolbar{
+  color: white;
+  font-weight: bold;
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="index.css">
+        <title>Game of life</title>
+    </head> 
+    <body>
+        <div class="text-center" id="toolbar">
+            <div class="h1">Game of Life Designer</div>
+            <button class="btn btn-info" id="help_btn" onclick="toggleHelp()">Help</button>
+            <button class="btn btn-info" id="colour_btn" onclick="toggleColourMenu()">Colour Menu</button>
+            <button class="btn btn-warning" id="pause_btn" onclick="pauseAnimation()">Pause</button>
+            <button class="btn btn-success" id="start_btn" onclick="startAnimation()">Start</button>
+            <button class="btn btn-danger" onclick="clearAll()">Clear All</button>
+            <button class="btn btn-danger" onclick="init()">Reset Board</button>
+            <div class="toolbar-element h5">
+                <p class="toolbar-text">Mouse Click/Hold Effect: (<strong class="dynamic-text" id="mouse-effect-text">Adding</strong>)</p>
+                <button class="btn btn-dark" id="switch_mfunc_btn" onclick="switchMouseEffect()">Switch</button>
+            </div>
+            <div class="toolbar-element h5">
+                <p class="toolbar-text">Brush Size: (<strong class="dynamic-text" id="brush-size-text">2</strong>)</p>
+                <button class="btn btn-primary plus-minus-btn" id="brush-decreaser" onclick="brushSizeIncrease(false)">-</button>
+                <button class="btn btn-primary plus-minus-btn" id="brush-increaser" onclick="brushSizeIncrease(true)">+</button>
+            </div>
+            <div class="toolbar-element h5">
+                <p class="toolbar-text">FPS: (<strong class="dynamic-text" id="fps-text">5</strong>)</p>
+                <button class="btn btn-primary plus-minus-btn" id="fps-decreaser" onclick="fpsIncrease(false)">-</button>
+                <button class="btn btn-primary plus-minus-btn" id="fps-increaser" onclick="fpsIncrease(true)">+</button>
+            </div>
+        </div>
+        <div class="hidden-element" id="colour-menu">
+            <button class="btn btn-primary hidden-element" id="default_colours_btn" onclick="applyDefaultColours()">Restore Default Colours</button>
+            <div class="toolbar-text h3">Colour Menu</div>
+            <div class="help-text h5">
+                <div>Simply pick one or more colours from the dropdown.</div>
+                <div>The selected colour/colours will be applied randomly to all game cells.</div>
+                <div>Applying new colours or restoring to default will reset the board.</div>
+            </div>
+            <div class="dropdown">
+                <button 
+                class="btn btn-secondary dropdown-toggle" 
+                type="button"
+                id="dropdownMenuButton" 
+                data-toggle="dropdown" 
+                aria-haspopup="true" 
+                aria-expanded="false"
+                onclick="chooseColour()"
+                >
+                Choose Colour
+                </button>
+                <div class="dropdown-menu"  aria-labelledby="dropdownMenu2">
+                    <div class="row" id="dropdown-options"></div>
+                </div>
+            </div>
+            
+            <div class="help-heading hidden-element h3" id="selected-colours">Selected (click to remove)</div>
+            <button class="btn btn-success hidden-element" id="apply-colours-btn" onclick="applyColours()">Apply</button>
+        </div>
+        <div class="h2 text-center hidden-element" id="game-help">
+            <div id="game-controls">
+                <div class="help-heading">Game idea</div>
+                <div class="help-text h5">
+                    <div>This is an adaptation of <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Conway's Game of Life</a> where each dot represents a live cell.</div>
+                    <div>Any live cell with two or three live neighbours survives to the next iteration.</div>
+                    <div>Any dead cell with exactly three neighbours becomes a live cell at the next iteration.</div>
+                    <div>All other live cells die at the next iteration and all other dead cells stay dead.</div>
+                </div>
+                <div class="help-heading">Game information</div>
+                <div class="help-text h5">
+                    <div>The main idea of this project is to let you design the game in any way before watching it evolve according to those three simple rules.</div>
+                    <div>The game can be paused at any point for accurate desigining, but you can also add/remove cells without pausing.</div>
+                    <div>You can either add or remove cells with one left click or by holding the left click down and moving the mouse around.</div>
+                    <div>The customizable brush size represents the amount of cells around the mouse you influence at once.</div>
+                    <div>FPS represents the amount of iterations that will be played each second. This may become slower on big screens with many cells.</div>
+                    <div>Resizing the browser window, reloading or zooming in/out will reset the board to allow the cells to fill in the new available space.</div>
+                    <div>A wide range of colours are available to choose from for the game cells.</div>
+                    <div>One interesting design experiment is to clear the board and draw your name or signature before resuming to watch it evolve.</div>
+                </div>
+                <div class="help-heading">Game Controls with Buttons or (Keyboard Shortcuts)</div>
+                <div class="help-text h5">
+                    <div>Help/Hide Help (H) -> Show/Hide Help menu</div>
+                    <div>Pause/Start (P) -> Pause/Start game</div>
+                    <div>Clear All (C) -> Clears all cells from the board</div>
+                    <div>Reset Board (R) -> Resets board with random new populated cells</div>
+                    <div>Switch (S) -> Switch between Adding/Removing cells with the mouse when clicking or moving while holding left click</div>
+                    <div>Brush size - (V) -> Lowers brush size [min:1]</div>
+                    <div>Brush size + (B) -> Increases brush size [max:10]</div>
+                    <div>FPS - (D) -> Lowers game speed [min:1]</div>
+                    <div>FPS + (F) -> Increases game speed [max:60]</div>
+                    <div>(0) -> Disable/Enable keyboard shortcuts [enabled by default]</div>
+                    <div>(T) -> Show/Hide toolbar and game title</div> 
+                </div>
+            </div>
+        </div>
+        
+        <canvas></canvas>
+
+        <script src="index.js"></script>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
