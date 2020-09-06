@@ -9,6 +9,16 @@ canvas {
   background: black;
 }
 
+.colour-btn{
+  background-image: linear-gradient(black, green) !important;
+  color: white;
+  font-weight: bold;
+}
+
+.btn{
+  font-weight: bold;
+}
+
 .dynamic-text{
   color:lightgreen;
 }
@@ -29,6 +39,10 @@ canvas {
   display:none;
 }
 
+.inline-element{
+  display:inline-block;
+}
+
 .toolbar-element{
   display:inline-block;
 }
@@ -36,6 +50,8 @@ canvas {
 .toolbar-text{
   display:inline-block;
 }
+
+
 
 #colour-menu{
   color:white;

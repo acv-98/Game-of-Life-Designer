@@ -153,7 +153,7 @@ const resolution = 10;
 
 let cellArr = [];
 let animationRunning = false;
-let showingHelp = false;
+let showingHelp = true;
 let showingToolbar = true;
 let choosingColours = false;
 let keyboardEnabled = true;
@@ -161,10 +161,10 @@ let keyboardEnabled = true;
 let cols = Math.floor(canvas.width / resolution)+1;
 let rows = Math.floor(canvas.height / resolution)+1;
 let initialPopulationPercentage = 7;
-let brushSize = 2;
+let brushSize = Number(document.getElementsByClassName("brush-size-text")[0].innerText);
 let maxBrushSize = 10;
 let minBrushSize = 1;
-let fps = 5;
+let fps = Number(document.getElementsByClassName("fps-text")[0].innerText);
 let maxFps = 60;
 let minFps = 1;
 let animationTimeout = null;
@@ -244,9 +244,13 @@ window.addEventListener('keydown', function(event){
         }
         if(keyCode === "Digit0"){
             keyboardEnabled = false;
+            $(".shortcuts-text").text("disabled");
+            $(".shortcuts-text").css('color', 'red');
         }
     } else if (keyCode === "Digit0"){
         keyboardEnabled = true;
+        $(".shortcuts-text").text("enabled");
+        $(".shortcuts-text").css('color', 'lightgreen');
     }
 });
 
@@ -258,7 +262,7 @@ function Cell(x,y, populated){
     this.colour = cellColours[Math.floor(Math.random()*cellColours.length)];
 
     this.update = function() {
-        ctx.clearRect(this.x-5, this.y-5, resolution, resolution);
+        ctx.clearRect(this.x - resolution/2, this.y - resolution/2, resolution, resolution);
         if(this.populated){
             ctx.beginPath();
             ctx.arc(this.x, this.y, resolution/2, 0, Math.PI * 2, false);
@@ -380,20 +384,23 @@ function animate() {
 
 function startAnimation(){
     if (!animationRunning){
+        const start_pause_btn = $(".start-pause-btn");
+        toggleElementClass(start_pause_btn,"btn-success","btn-warning");
+        start_pause_btn.text("Pause");
         animationRunning = true;
         animate();
-        document.getElementById("start_btn").style.display = "none";
-        document.getElementById("pause_btn").style.display = "inline";
     }
-
 }
 
 
 function pauseAnimation(){
-    clearTimeout(animationTimeout);
-    animationRunning = false;
-    document.getElementById("start_btn").style.display = "inline";
-    document.getElementById("pause_btn").style.display = "none";
+    if(animationRunning){
+        const start_pause_btn = $(".start-pause-btn");
+        toggleElementClass(start_pause_btn,"btn-success","btn-warning");
+        start_pause_btn.text("Start");
+        clearTimeout(animationTimeout);
+        animationRunning = false;
+    }
 }
 
 
@@ -411,38 +418,36 @@ function clearAll(){
 function switchMouseEffect(){
     mouse.adding = !mouse.adding;
     const switchText = document.getElementById("mouse-effect-text");
+    const switch_btn = $(".switch-mfunc-btn");
     if (mouse.adding){
         switchText.innerText = "Adding";
-        addClass(false, "switch_mfunc_btn", "btn-info");
-        addClass(true, "switch_mfunc_btn", "btn-dark");
+        toggleElementClass(switch_btn, "btn-dark", "btn-info");
     } else {
         switchText.innerText = "Removing";
-        addClass(true, "switch_mfunc_btn", "btn-info");
-        addClass(false, "switch_mfunc_btn", "btn-dark");
+        toggleElementClass(switch_btn, "btn-dark", "btn-info");
     }
 }
 
 
 function brushSizeIncrease(increasing){
-    const brushSizeText = document.getElementById("brush-size-text");
     brushSize = plusMinusButtons(increasing, brushSize, "brush-increaser", "brush-decreaser", minBrushSize, maxBrushSize, 1);
-    brushSizeText.innerText = brushSize;
+    $(".brush-size-text").text(brushSize);
 }
 
 
 function fpsIncrease(increasing){
-    const fpsText = document.getElementById("fps-text");
     fps = plusMinusButtons(increasing, fps, "fps-increaser", "fps-decreaser", minFps, maxFps, 2);
-    fpsText.innerText = fps;
+    $(".fps-text").text(fps);
 }
 
 
-function plusMinusButtons(increasing, variable, increaser_id, decreaser_id, min, max, step_size){
+function plusMinusButtons(increasing, variable, increaser_class, decreaser_class, min, max, step_size){
+    const increaser_btn = $('.' + increaser_class);
+    const decreaser_btn = $('.' + decreaser_class);
     if(increasing){
-        console.log("increasing");
         // if variable used to be min value, enable decreaser button after increase
         if(variable === min){
-            addClass(false, decreaser_id, "disabled");
+            decreaser_btn.removeClass("disabled");
         }
         // if variable becomes bigger than max with step size, make it equal to max
         if((variable + step_size) < max){
@@ -452,12 +457,12 @@ function plusMinusButtons(increasing, variable, increaser_id, decreaser_id, min,
         }
         // if variable is max, disable increaser button
         if(variable === max){
-            addClass(true, increaser_id, "disabled");
+            increaser_btn.addClass("disabled");
         }
     } else {
         // if variable used to be max value, enable increaser button after decrease
         if (variable === max){
-            addClass(false, increaser_id, "disabled");
+            increaser_btn.removeClass("disabled");
         }
         // if variable becomes smaller than min with step size, make it equal to min
         if(variable - step_size > min){
@@ -467,33 +472,36 @@ function plusMinusButtons(increasing, variable, increaser_id, decreaser_id, min,
         }
         // if variable is min, disable decreaser button
         if (variable === min){
-            addClass(true, decreaser_id, "disabled");
+            decreaser_btn.addClass("disabled");
         }
     }
     return variable;
 } 
 
 function toggleHelp(){
-    const help_btn = document.getElementById("help_btn");
+    const help_btn = $(".help-btn");
+    const help_menu = $("#game-help");
     if(showingHelp){
-        addClass(true, "game-help", "hidden-element");
-        addClass(false, "help_btn", "btn-danger");
+        help_menu.hide();
+        toggleElementClass(help_btn, "btn-info", "btn-danger");
+        help_btn.text("Help");
         showingHelp = false;
-        help_btn.innerText = "Help"
     } else {
-        addClass(false, "game-help", "hidden-element");
-        addClass(true, "help_btn", "btn-danger");
-        showingHelp = true;
+        help_menu.show();
+        toggleElementClass(help_btn, "btn-info", "btn-danger");
+        help_btn.text("Hide Help");
         help_btn.innerText = "Hide Help";
+        showingHelp = true;
     }
 }
 
 function toggleToolbar(){
+    const toolbar = $("#toolbar");
     if(showingToolbar){
-        addClass(true, "toolbar", "hidden-element");
+        toolbar.hide();
         showingToolbar = false;
     } else {
-        addClass(false, "toolbar", "hidden-element");
+        toolbar.show();
         showingToolbar = true;
     }
 }
@@ -507,17 +515,28 @@ function toggleAnimation(){
 }
 
 function toggleColourMenu(){
-    const colour_btn = document.getElementById("colour_btn");
+    const colour_btn = $(".colour-btn");
+    const colour_menu = $("#colour-menu");
     if (choosingColours){
-        addClass(true, "colour-menu", "hidden-element");
-        addClass(false, "colour_btn", "btn-danger");
-        colour_btn.innerText = "Colour Menu";
+         colour_menu.hide();
+         toggleElementClass(colour_btn, "btn-info", "btn-danger");
+         colour_btn.text("Colour Menu");
         choosingColours = false;
     } else{
-        addClass(false, "colour-menu", "hidden-element");
-        addClass(true, "colour_btn", "btn-danger");
-        colour_btn.innerText = "Hide Colour Menu";
+        colour_menu.show();
+        toggleElementClass(colour_btn, "btn-info", "btn-danger");
+        colour_btn.text("Hide Colour Menu");
         choosingColours = true;
+    }
+}
+
+function toggleElementClass(element, class1, class2){
+    if (element.hasClass(class1)){
+        element.removeClass(class1);
+        element.addClass(class2);
+    } else{
+        element.removeClass(class2);
+        element.addClass(class1);
     }
 }
 
@@ -529,9 +548,9 @@ function addColour(colour){
     tempColours.push(colour);
     showSelectedColour(colour, "selected-colours");
     if(tempColours.length === 1){
-        addClass(false, "selected-colours", "hidden-element");
+        $("#selected-colours").show();
     }
-    addClass(false, "apply-colours-btn", "hidden-element");
+    $("#apply-colours-btn").show();
 }
 
 function showSelectedColour(colour, containerId){
@@ -544,10 +563,10 @@ function showSelectedColour(colour, containerId){
         container.removeChild(colourDiv);
         tempColours.splice(tempColours.indexOf(colour),1);
         if (tempColours.length === 0){
-            addClass(true, "apply-colours-btn", "hidden-element");
-            addClass(true, "selected-colours", "hidden-element");
+            $("#apply-colours-btn").hide();
+            $("#selected-colours").hide();
         } else{
-            addClass(false, "apply-colours-btn", "hidden-element");
+            $("#apply-colours-btn").show();
         }
     }
     const container = document.getElementById(containerId);
@@ -556,8 +575,8 @@ function showSelectedColour(colour, containerId){
 
 function applyColours(){
     cellColours = tempColours;
-    addClass(true, "apply-colours-btn", "hidden-element");
-    addClass(false, "default_colours_btn", "hidden-element");
+    $("#apply-colours-btn").hide();
+    $("#default-colours-btn").show();
     init();
 }
 
@@ -565,9 +584,9 @@ function applyDefaultColours(){
     cellColours = defaultColours;
     tempColours = [];
     $(".temp-colour-display").remove();
-    addClass(true, "default_colours_btn", "hidden-element");
-    addClass(true, "apply-colours-btn", "hidden-element");
-    addClass(true, "selected-colours", "hidden-element");
+    $("#default-colours-btn").hide();
+    $("#apply-colours-btn").hide();
+    $("#selected-colours").hide();
     init();
 }
 
@@ -598,16 +617,6 @@ function arrayToDropdown(array, dropdownId, isColour){
                 dropdown.appendChild(btn);
             }
         }
-    }
-}
-
-
-function addClass(adding, elementId, className){
-    let element = document.getElementById(elementId);
-    if (adding){
-        element.classList.add(className);
-    } else{
-        element.classList.remove(className);
     }
 }
 
