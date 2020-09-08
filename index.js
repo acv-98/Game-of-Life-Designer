@@ -323,25 +323,35 @@ function getNeighbours(size, col, row, inclusive) {
         neighbourCount : 0,
         neighbourCoord : []
     };
-    for (let i = -1; i < size; i++) {
-        for (let j = -1; j < size; j++) {
-            const x_cell = col + i;
-            const y_cell = row + j;
-            if (i === 0 && j === 0 && !inclusive) {
-                continue;
-            }
-            let coordinates = [];
-            if(x_cell >= 0 && y_cell >= 0 && 
-                x_cell < cols && y_cell < rows) {
-                if (cellArr[x_cell][y_cell].populated){
-                    neighbours.neighbourCount += 1;
+    const onlyOne = (size === 1);
+    if (onlyOne){
+        neighbours.neighbourCoord.push([col, row]);
+    } else {
+        for (let i = -1; i < size; i++) {
+            for (let j = -1; j < size; j++) {
+                const x_cell = col + i;
+                const y_cell = row + j;
+                let coordinates = [];
+    
+                if(i === 0 && j === 0){
+                    if(!inclusive){
+                        continue;
+                    }
                 }
-                coordinates.push(x_cell);
-                coordinates.push(y_cell);
-                neighbours.neighbourCoord.push(coordinates);
+    
+                if(x_cell >= 0 && y_cell >= 0 && 
+                    x_cell < cols && y_cell < rows) {
+                    if (cellArr[x_cell][y_cell].populated){
+                        neighbours.neighbourCount += 1;
+                    }
+                    coordinates.push(x_cell);
+                    coordinates.push(y_cell);
+                    neighbours.neighbourCoord.push(coordinates);
+                }
             }
         }
     }
+    
     return neighbours;
 }
 
