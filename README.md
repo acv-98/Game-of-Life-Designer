@@ -1,14 +1,14 @@
 # Game of Life Designer
 
-** Motivation **
+**Motivation**
 
-Ever since I stumbled upon Conway's Game of Life [Wikipedia Link](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life), I wanted to try implementing it because I found it really interesting how a few simple rules can generate so much evolution.
+Ever since I stumbled upon Conway's Game of Life ([Wikipedia Link](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life){:target="_blank"}), I wanted to try implementing it because I found it really interesting how a few simple rules can generate so much evolution.
 
 The original game is known as a zero-player-game, meaning you mainly just watch it do its thing without interacting with it at all.
-I wanted to change that and make it as interactive as possible by letting the user design the initial starting points and even delete or add new cells mid game
+I wanted to change that and make it as interactive as possible by letting the user design the initial starting points and even delete or add new cells mid game.
 
 
-** Animation rules **
+**Animation rules**
 
 Each point represents a cell.
 
@@ -17,7 +17,7 @@ Any dead cell with exactly three neighbours becomes a live cell at the next iter
 All other live cells die at the next iteration and all other dead cells stay dead.
 
 
-** Adaptation features **
+**Adaptation features**
 
 * Play / Pause
 * Wide choice of colours for the cells
@@ -26,7 +26,7 @@ All other live cells die at the next iteration and all other dead cells stay dea
 * Keyboard shortcuts for those who want a game-like experience and do not like buttons as much.
 
 
-** Try it **
+**Try it**
 
 I hosted this project on Heroku here: [link](https://game-of-life-designer.herokuapp.com/)
 
