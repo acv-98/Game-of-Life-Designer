@@ -19,9 +19,10 @@ Each point represents a cell.
 
 **Adaptation features**
 
-* Play / Pause
-* Wide choice of colours for the cells
-* Adding / Removing cells from the board at any point with a range of different sized "brushes" to add / remove from 1 to 121(11x11) cells at once
+* Play / Pause.
+* Clear the board and use the mouse to draw your own beginnings.
+* Wide choice of colours for the cells.
+* Adding / Removing cells from the board at any point with a range of different sized "brushes" to add / remove from 1 to 121(11x11) cells at once.
 * Customizable animation speed from 1 to 60 iterations per second. 
 * Keyboard shortcuts for those who want a game-like experience and do not like buttons as much.
 
