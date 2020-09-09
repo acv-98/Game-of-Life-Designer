@@ -12,9 +12,9 @@ I wanted to change that and make it as interactive as possible by letting the us
 
 Each point represents a cell.
 
-Any live cell with two or three live neighbours survives to the next iteration.
-Any dead cell with exactly three neighbours becomes a live cell at the next iteration.
-All other live cells die at the next iteration and all other dead cells stay dead.
+* Any live cell with two or three live neighbours survives to the next iteration.
+* Any dead cell with exactly three neighbours becomes a live cell at the next iteration.
+* All other live cells die at the next iteration and all other dead cells stay dead.
 
 
 **Adaptation features**
