@@ -4,7 +4,7 @@
 
 Ever since I stumbled upon Conway's Game of Life ([Wikipedia Link](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)), I wanted to try implementing it because I found it really interesting how a few simple rules can generate so much evolution.
 
-The original game is known as a zero-player-game, meaning you mainly just watch it do its thing without interacting with it at all.
+The original game is known as a zero-player-game, meaning you mainly just watch it do its thing without interacting with it at all. <br />
 I wanted to change that and make it as interactive as possible by letting the user design the initial starting points and even delete or add new cells mid game.
 
 
@@ -31,4 +31,5 @@ Each point represents a cell.
 
 I hosted this project on Heroku here: [link](https://game-of-life-designer.herokuapp.com/)
 
-I noticed that if I deploy any JavaScript changes, the browser sometimes uses only the old files instead of the new ones. This may causes issues, so please clear your browsing data or open the link in a private window if something does not seem right when you come back after your first visit.
+If something seems to work incorrectly, try opening the link in a private window or delete browsing data. <br />
+I noticed that when I deploy any JS changes, the browser sometimes uses the old version instead of the new and that may cause unintended issues.
