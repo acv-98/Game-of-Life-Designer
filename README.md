@@ -29,7 +29,6 @@ Each point represents a cell.
 
 **Try it**
 
-I hosted this project on Heroku here: [link](https://game-of-life-designer.herokuapp.com/)
+https://acv-98.github.io/Game-of-Life-Designer/
 
-If something seems to work incorrectly, try opening the link in a private window or delete browsing data. <br />
-I noticed that when I deploy any JS changes, the browser sometimes uses the old version instead of the new and that may cause unintended issues.
+
